@@ -1,19 +1,12 @@
-FROM ubuntu:latest
+FROM python:3.12-slim
 
-# Update apt-get and install necessary packages
-RUN apt-get update && apt-get install -y \
-    python3.12 \
-    python3-pip \
-    git \
-    python3-yaml
+RUN apt-get update && apt-get install -y --no-install-recommends git \
+  && rm -rf /var/lib/apt/lists/*
 
-# RUN pip3 install PyYAML     --> which generates the error 1 and fails the build.
+RUN pip install --no-cache-dir PyYAML
 
-# Copy feed.py file to the Docker image
 COPY feed.py /usr/bin/feed.py
 
-# Copy entrypoint.sh file to the Docker image
 COPY entrypoint.sh /entrypoint.sh
 
-# Set the entrypoint for the Docker image
 ENTRYPOINT ["/entrypoint.sh"]
