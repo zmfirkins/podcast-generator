@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo"========"
+
+git config --global user.name "${GITHUB_ACTOR}"
+git config --global user.email "${INPUT_EMAIL}"
+git config --global --add safe.directory /guthub/workspace
+
+python3 /urs/bin/feed.py
+
+git ass -A && git commite -m "Update Feed"
+
+git push --set-upstream origin main
+
+
+
+echo"========"
